@@ -8,7 +8,7 @@ import (
 	"github.com/kennygrant/sanitize"
 	"net"
 	"os"
-	"strings"
+	//"strings"
 	"time"
 )
 
@@ -211,7 +211,14 @@ func (b *Talkiepi) ParticipantLEDUpdate() {
 }
 
 func (b *Talkiepi) OnTextMessage(e *gumble.TextMessageEvent) {
-	fmt.Printf("Message from %s: %s\n", e.Sender.Name, strings.TrimSpace(esc(e.Message)))
+	//TODO: 
+	// 	panic: runtime error: invalid memory address or nil pointer dereference
+	// [signal SIGSEGV: segmentation violation code=0x1 addr=0x8 pc=0x35c1b0]
+
+	// goroutine 30 [running]:
+	// github.com/lersakk/talkiepi.(*Talkiepi).OnTextMessage(0x261c008, 0x2567b80)
+	//         /home/pi/go/pkg/mod/github.com/lersakk/talkiepi@v0.0.0-20230824070720-88637b340db0/client.go:214 +0x60
+	//fmt.Printf("Message from %s: %s\n", e.Sender.Name, strings.TrimSpace(esc(e.Message)))
 }
 
 func (b *Talkiepi) OnUserChange(e *gumble.UserChangeEvent) {
