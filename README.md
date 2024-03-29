@@ -1,5 +1,6 @@
 # NOTE
-This project is no longer maintained. It was archieved 17 June 2020.
+This fork tries to make the talkipi working with the "Raspbian GNU/Linux 11 (bullseye)" an an current go version "go version go1.22.1 linux/arm"
+The original project is no longer maintained. It was archieved 17 June 2020.
 
 # talkiepi
 ![assembled](doc/_DSF9664.jpg "Talkiepi assembled")
