@@ -255,7 +255,8 @@ Install TalkiePi with:
 
 ~~~
 $cd $GOPATH/src
-$git clone https://github.com/alaric84/talkiepi.git /home/pi/go/src/github.com/alaric84/talkiepi
+$git clone https://github.com/alaric84/talkiepi.git
+$cd talkipie
 $go mod init github.com/alaric84/talkiepi
 $go build -o $GOPATH/bin/talkiepi $GOPATH/src/github.com/alaric84/talkiepi/cmd/talkiepi/main.go
 ~~~
