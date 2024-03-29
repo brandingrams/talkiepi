@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/dchote/gumble/gumble"
 	_ "github.com/dchote/gumble/opus"
-	"github.com/lersakk/talkiepi"
+	"github.com/alaric84/talkiepi"
 	"os"
 	"os/signal"
 	"syscall"
