@@ -20,56 +20,17 @@ TalkiePi will also accept arguments for `-password`, `-insecure`, `-certificate`
 
 ## Install Operating System
 
-Download the latest version of [Raspbian Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/); 
+Download the latest version of [Raspbian Lite](https://downloads.raspberrypi.com/raspios_oldstable_lite_armhf/images/?_gl=1*1fu3ll*_ga*OTk2MDU2MjEuMTcxMTcxMzg2Mg..*_ga_22FD70LWDS*MTcxMTc0MjIxOC4xLjEuMTcxMTc0MjI1NC4wLjAuMA..); 
 These instructions have been tested with:
 
 ~~~
-Based on: Debian Stretch Lite
-Release date: 2019-04-8
+Raspberry Pi OS (Legacy) Lite
+"Raspbian GNU/Linux 11 (bullseye)"
 ~~~
 
-Write the image to a miroSD card with [Etcher](https://etcher.io/). Note, after the write is complete Windows will complain that the microSD card needs to be formatted. This message can be ignored. It is just that Windows cannot read the Linux partitions, but Windows can read the **Boot** partition which is the only one we need access to. 
-
-Create two files on the **Boot** partition of the microSD card:
-
-~~~
-wpa_supplicant.conf
-ssh
-~~~
-
-Below is a template for the wpa_supplicant.conf file. Please edit these details to match one or more wireless networks you intend to use. You can define as many networks as you like, if using only one network please delete the second network definition. Also, the two-letter country code should match the country you are operating in.
-
-Note, the file must be formatted with Unix style line end characters (i.e. LF not CR LF). [Notepad++](https://notepad-plus-plus.org/) is an example of a Windows based text editor that supports this.
-
-~~~
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-country=AU
-
-network={
-    id_str="descriptive name for network 2"
-    ssid="SSID2"
-    psk="password2"
-    key_mgmt=WPA-PSK
-    priority=2
-}
-
-network={
-    id_str="descriptive name for network 1"
-    ssid="SSID1"
-    psk="password1"
-    key_mgmt=WPA-PSK
-    priority=1
-}
-~~~
-
-The ssh file should be empty.
+Write the image to a miroSD card with the Raspberry Pi Imager and configure the OS (Wifi settings, activate SSH)
 
 Insert the microSD card into the RPi and apply power. The RPi will boot and attempt to connect one of the WiFi networks defined above with SSH enabled.
-
-Use [Advanced Port Scanner](https://www.advanced-port-scanner.com/) or your router’s web interface to find the IP address of the RPi.
-
-Use [PuTTY](http://www.putty.org/) to make an SSH connection to the RPi.
 
 The default login credentials are:
 
@@ -78,12 +39,7 @@ raspberrypi login: pi
 password: raspberry
 ~~~
 
-## Change Mirror
-~~~
-sudo nano /etc/apt/sources.list
-deb http://archive.raspbian.org/raspbian/ bullseye main contrib non-free rpi
-~~~
-
+## Update Packages
 
 Update repositories and upgrade software with:
 
@@ -135,16 +91,18 @@ sudo apt-get install libopenal-dev
 ~~~
 
 ## SeeedStudio ReSpeaker 2-Mic HAT
-I was not able to get TalkiePi to work with the latest version (3.1) of seeed-voicecard. If anybody has a solution to this please let me know. In the meantime, we need to install an older version. 
+https://wiki.keyestudio.com/Ks0314_keyestudio_ReSpeaker_2-Mic_Pi_HAT_V1.0
 
 Install drivers with these commands:
 
+Use this git repository (not the one in the document)
+
 ~~~
-git clone https://github.com/respeaker/seeed-voicecard.git
+git clone https://github.com/HinTak/seeed-voicecard
 cd seeed-voicecard
-sudo mv /boot/kernel7.img /tmp/
-sudo ./install.sh  --compat-kernel
+sudo ./install.sh
 ~~~
+
 Disable pi's on board sound. While not essential but cleans things up when you list the sound devices with the "aplay -l" command.
 ~~~
 sudo nano /etc/modprobe.d/blacklist-alsa.conf
@@ -207,7 +165,6 @@ pcm.array {
 
 ~~~
 
-Save (CTRL-O) and exit (CTRL-X).
 The following will help speed things up a bit when adjusting sample rates:
 ~~~
 sudo apt-get install haveged
@@ -284,7 +241,6 @@ export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
-export PKG_CONFIG_PATH=/path/to/opus/pkgconfig:$PKG_CONFIG_PATH
 ~~~
 
 Reload the configuration with:
@@ -299,12 +255,9 @@ Install TalkiePi with:
 
 ~~~
 $cd $GOPATH/src
-$go get periph.io/x/cmd/...
-$go get github.com/dchote/gopus
-$go get github.com/lersakk/talkiepi
-$go mod init github.com/lersakk/talkiepi
-$git clone https://github.com/lersakk/talkiepi.git /home/pi/go/src/github.com/lersakk/talkiepi
-$go build -o $GOPATH/bin/talkiepi $GOPATH/src/github.com/lersakk/talkiepi/cmd/talkiepi/main.go
+$git clone https://github.com/alaric84/talkiepi.git /home/pi/go/src/github.com/alaric84/talkiepi
+$go mod init github.com/alaric84/talkiepi
+$go build -o $GOPATH/bin/talkiepi $GOPATH/src/github.com/alaric84/talkiepi/cmd/talkiepi/main.go
 ~~~
 
 The RPi Zero needs libopenal complied without ARM NEON support. These packages can be found in the [workarounds](https://github.com/CustomMachines/talkiepi/blob/master/workarounds) directory of this repo. They can be installed over the existing libopenal libraries.
