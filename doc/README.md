@@ -76,6 +76,7 @@ $sudo nano /etc/rc.local
 
 Add the following lines above exit 0:
 
+TODO: Not working for Bullseye...
 ~~~
 # Disable HDMI
 /usr/bin/tvservice -o
@@ -249,6 +250,13 @@ Reload the configuration with:
 $source ~/.profile
 ~~~
 
+## Install Dependencies
+
+~~~
+$sudo apt install libopenal-dev
+$sudo apt install libopus-dev
+~~~
+
 ## Install TalkiePi
 
 Install TalkiePi with:
@@ -258,7 +266,8 @@ $cd $GOPATH/src
 $git clone https://github.com/alaric84/talkiepi.git
 $cd talkipie
 $go mod init github.com/alaric84/talkiepi
-$go build -o $GOPATH/bin/talkiepi $GOPATH/src/github.com/alaric84/talkiepi/cmd/talkiepi/main.go
+$go mod tidy
+$go build -o $GOPATH/bin/talkiepi $GOPATH/src/talkiepi/cmd/talkiepi/main.go
 ~~~
 
 The RPi Zero needs libopenal complied without ARM NEON support. These packages can be found in the [workarounds](https://github.com/CustomMachines/talkiepi/blob/master/workarounds) directory of this repo. They can be installed over the existing libopenal libraries.
