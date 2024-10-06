@@ -20,7 +20,8 @@ func (b *Talkiepi) Init() {
 
 	b.initGPIO()
 	MyLedStrip, _ = NewLedStrip()
-	fmt.Printf("%v %s\n", MyLedStrip.buf, MyLedStrip.display)
+	//fmt.Printf("%v %s\n", MyLedStrip.buf, MyLedStrip.display)
+	fmt.Printf("%v %s\n")
 	b.Connect()
 }
 
