@@ -13,8 +13,8 @@ const (
 	OnlineLEDPin       uint = 18
 	ParticipantsLEDPin uint = 23
 	TransmitLEDPin     uint = 24
-	ButtonPin          uint = 17
-	SeeedStudio        bool = true
+	ButtonPin          uint = 26
+	SeeedStudio        bool = false
 )
 
 type Talkiepi struct {
