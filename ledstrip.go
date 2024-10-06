@@ -1,6 +1,6 @@
 package talkiepi
 
-/*import (
+import (
 	"fmt"
 	"strconv"
 
@@ -94,4 +94,4 @@ func (ls *LedStrip) ledCtrl(num int, color string) error {
 
 func (ls *LedStrip) closePort() {
 	ls.spiInterface.Close()
-}*/
+}
